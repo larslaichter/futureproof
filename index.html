@@ -285,7 +285,7 @@
     </div>
 
     <header>
-        <video class="video-bg" autoplay muted loop playsinline>
+        <video class="video-bg" autoplay muted loop playsinline webkit-playsinline preload="auto">
             <source src="video.mp4" type="video/mp4">
         </video>
         <div class="hero-overlay">
@@ -380,11 +380,42 @@
         const overlay = document.getElementById('password-overlay');
         const input = document.getElementById('password-input');
         const error = document.getElementById('password-error');
+        const video = document.querySelector('.video-bg');
+
+        // Force video attributes for mobile
+        video.setAttribute('playsinline', '');
+        video.setAttribute('webkit-playsinline', '');
+        video.muted = true;
+        video.playsInline = true;
+
+        // Robust play function with retries
+        function playVideo() {
+            if (!video) return;
+            video.muted = true; // Ensure muted for autoplay policy
+            
+            const playPromise = video.play();
+            if (playPromise !== undefined) {
+                playPromise.catch(err => {
+                    console.log('Autoplay prevented, will retry on interaction');
+                });
+            }
+        }
+
+        // Try to play on various events (mobile needs user interaction)
+        function setupMobileAutoplay() {
+            const events = ['touchstart', 'touchend', 'click', 'scroll'];
+            const playOnce = () => {
+                playVideo();
+                events.forEach(e => document.removeEventListener(e, playOnce));
+            };
+            events.forEach(e => document.addEventListener(e, playOnce, { passive: true }));
+        }
 
         // Check if already authenticated
         if (sessionStorage.getItem('fp_auth') === 'true') {
             overlay.classList.add('hidden');
-            document.querySelector('.video-bg').play();
+            playVideo();
+            setupMobileAutoplay();
         }
 
         input.addEventListener('keypress', (e) => {
@@ -392,11 +423,26 @@
                 if (input.value === PASSWORD) {
                     sessionStorage.setItem('fp_auth', 'true');
                     overlay.classList.add('hidden');
-                    document.querySelector('.video-bg').play();
+                    playVideo();
+                    setupMobileAutoplay();
                 } else {
                     error.textContent = 'Incorrect password';
                     input.value = '';
                 }
+            }
+        });
+
+        // Also try when video is ready
+        video.addEventListener('loadedmetadata', () => {
+            if (sessionStorage.getItem('fp_auth') === 'true') {
+                playVideo();
+            }
+        });
+
+        // Visibility change handler (play when tab becomes visible)
+        document.addEventListener('visibilitychange', () => {
+            if (!document.hidden && sessionStorage.getItem('fp_auth') === 'true') {
+                playVideo();
             }
         });
     </script>
