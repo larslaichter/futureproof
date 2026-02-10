@@ -42,37 +42,52 @@
             padding: 0 2rem;
         }
 
-        /* Header / Hero */
+        /* Header / Hero - Full Screen with Overlay */
         header {
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            padding: 4rem 0;
-        }
-
-        .embed-wrapper { position: relative; width: 100vw; left: 50%; right: 50%; margin-left: -50vw; margin-right: -50vw; height: 100vh;
+            position: relative;
             width: 100%;
-            
-            margin: 0 auto 3rem;
-            
-            background: var(--card-bg);
-            border: 1px solid var(--border);
+            height: 100vh;
+            overflow: hidden;
         }
 
-        .embed-wrapper iframe {
+        .embed-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
             height: 100%;
-            display: block;
+            z-index: 1;
+        }
+
+        .embed-bg iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            object-fit: cover;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 4rem;
+            background: linear-gradient(to top, rgba(10,10,10,0.95) 0%, rgba(10,10,10,0.6) 40%, rgba(10,10,10,0.2) 70%, transparent 100%);
         }
 
         h1 {
             font-family: 'Space Mono', monospace;
-            font-size: clamp(3rem, 10vw, 6rem);
+            font-size: clamp(3rem, 10vw, 7rem);
             font-weight: 700;
             letter-spacing: -0.03em;
             margin-bottom: 0.5rem;
             text-transform: uppercase;
+            text-shadow: 0 2px 20px rgba(0,0,0,0.5);
         }
 
         .tagline {
@@ -241,6 +256,10 @@
                 padding: 0 1.5rem;
             }
 
+            .hero-overlay {
+                padding: 2rem;
+            }
+
             section {
                 padding: 4rem 0;
             }
@@ -261,22 +280,21 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        header .container > * {
+        .hero-overlay > * {
             animation: fadeIn 0.8s ease-out forwards;
         }
 
-        header .container > *:nth-child(1) { animation-delay: 0.1s; }
-        header .container > *:nth-child(2) { animation-delay: 0.2s; }
-        header .container > *:nth-child(3) { animation-delay: 0.3s; }
-        header .container > *:nth-child(4) { animation-delay: 0.4s; }
+        .hero-overlay > *:nth-child(1) { animation-delay: 0.3s; opacity: 0; }
+        .hero-overlay > *:nth-child(2) { animation-delay: 0.5s; opacity: 0; }
+        .hero-overlay > *:nth-child(3) { animation-delay: 0.7s; opacity: 0; }
     </style>
 </head>
 <body>
     <header>
-        <div class="container">
-            <div class="embed-wrapper">
-                <iframe src="https://poly.cam/capture/f86e8831-d196-45c0-a96f-bd5df5802d31/embed" title="Polycam capture viewer" frameborder="0"></iframe>
-            </div>
+        <div class="embed-bg">
+            <iframe src="https://poly.cam/capture/f86e8831-d196-45c0-a96f-bd5df5802d31/embed" title="Polycam capture viewer" allow="fullscreen"></iframe>
+        </div>
+        <div class="hero-overlay">
             <h1>Future Proof</h1>
             <p class="tagline">develop and test ideas that survive</p>
             <div class="tags">
