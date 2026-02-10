@@ -8,4 +8,4 @@ A network of artists, scholars and technologists that tinker with ideas that wil
 
 ---
 
-Live at: https://laichter.github.io/futureproof/
+Live at: https://larslaichter.com/futureproof/
