@@ -384,6 +384,7 @@
         // Check if already authenticated
         if (sessionStorage.getItem('fp_auth') === 'true') {
             overlay.classList.add('hidden');
+            document.querySelector('.video-bg').play();
         }
 
         input.addEventListener('keypress', (e) => {
@@ -391,6 +392,7 @@
                 if (input.value === PASSWORD) {
                     sessionStorage.setItem('fp_auth', 'true');
                     overlay.classList.add('hidden');
+                    document.querySelector('.video-bg').play();
                 } else {
                     error.textContent = 'Incorrect password';
                     input.value = '';
