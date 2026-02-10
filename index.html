@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Future Proof — develop and test ideas that survive</title>
+    <meta name="description" content="A network of artists, scholars and technologists that tinker with ideas that will survive and scale.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0a0a0a;
+            --fg: #e8e8e8;
+            --fg-muted: #888;
+            --accent: #ff4d00;
+            --border: #2a2a2a;
+            --card-bg: #111;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--fg);
+            line-height: 1.6;
+            font-size: 18px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Header / Hero */
+        header {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 4rem 0;
+        }
+
+        .embed-wrapper {
+            width: 100%;
+            max-width: 1000px;
+            margin: 0 auto 3rem;
+            aspect-ratio: 16/9;
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+        }
+
+        .embed-wrapper iframe {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+
+        h1 {
+            font-family: 'Space Mono', monospace;
+            font-size: clamp(3rem, 10vw, 6rem);
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+        }
+
+        .tagline {
+            font-size: clamp(1rem, 2.5vw, 1.5rem);
+            color: var(--fg-muted);
+            font-style: italic;
+            margin-bottom: 2rem;
+        }
+
+        .tags {
+            display: flex;
+            gap: 1rem;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .tags span {
+            color: var(--accent);
+        }
+
+        .tags span::after {
+            content: ' |';
+            color: var(--border);
+            margin-left: 1rem;
+        }
+
+        .tags span:last-child::after {
+            content: '';
+        }
+
+        /* Sections */
+        section {
+            padding: 6rem 0;
+            border-top: 1px solid var(--border);
+        }
+
+        h2 {
+            font-family: 'Space Mono', monospace;
+            font-size: clamp(1.5rem, 4vw, 2.5rem);
+            font-weight: 700;
+            margin-bottom: 2rem;
+            text-transform: uppercase;
+            letter-spacing: -0.02em;
+        }
+
+        .intro p {
+            font-size: clamp(1.1rem, 2vw, 1.4rem);
+            max-width: 800px;
+            line-height: 1.8;
+            color: var(--fg);
+        }
+
+        .intro p + p {
+            margin-top: 1.5rem;
+        }
+
+        /* Grid sections */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            padding: 2rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .card:hover {
+            border-color: var(--accent);
+        }
+
+        .card h3 {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+
+        .card p {
+            color: var(--fg-muted);
+            font-size: 1rem;
+        }
+
+        /* Topics */
+        .topics-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .topic {
+            background: transparent;
+            border: 1px solid var(--border);
+            padding: 0.75rem 1.25rem;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.85rem;
+            color: var(--fg-muted);
+            transition: all 0.3s ease;
+        }
+
+        .topic:hover {
+            border-color: var(--accent);
+            color: var(--fg);
+        }
+
+        /* Value Props */
+        .value-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1px;
+            background: var(--border);
+            border: 1px solid var(--border);
+        }
+
+        .value-item {
+            background: var(--bg);
+            padding: 2rem;
+        }
+
+        .value-item .icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .value-item h3 {
+            font-family: 'Space Mono', monospace;
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+        }
+
+        .value-item p {
+            color: var(--fg-muted);
+            font-size: 0.95rem;
+        }
+
+        /* Footer */
+        footer {
+            padding: 4rem 0;
+            border-top: 1px solid var(--border);
+            text-align: center;
+        }
+
+        footer p {
+            color: var(--fg-muted);
+            font-size: 0.9rem;
+        }
+
+        footer .contact {
+            font-family: 'Space Mono', monospace;
+            font-size: 1rem;
+            color: var(--accent);
+            margin-top: 1rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 1.5rem;
+            }
+
+            section {
+                padding: 4rem 0;
+            }
+
+            .tags {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            .tags span::after {
+                content: '';
+            }
+        }
+
+        /* Subtle animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        header .container > * {
+            animation: fadeIn 0.8s ease-out forwards;
+        }
+
+        header .container > *:nth-child(1) { animation-delay: 0.1s; }
+        header .container > *:nth-child(2) { animation-delay: 0.2s; }
+        header .container > *:nth-child(3) { animation-delay: 0.3s; }
+        header .container > *:nth-child(4) { animation-delay: 0.4s; }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="embed-wrapper">
+                <iframe src="https://poly.cam/capture/f86e8831-d196-45c0-a96f-bd5df5802d31/embed" title="Polycam capture viewer" frameborder="0"></iframe>
+            </div>
+            <h1>Future Proof</h1>
+            <p class="tagline">develop and test ideas that survive</p>
+            <div class="tags">
+                <span>Risk</span>
+                <span>Art</span>
+                <span>Technology</span>
+            </div>
+        </div>
+    </header>
+
+    <section class="intro">
+        <div class="container">
+            <p>We are a network of people with an interest in ideas that last. A good idea, a good technology is one that sustains life. Today, many technologies and institutions we collaboratively create are doing immense harm.</p>
+            <p>Most of us are no longer safe from those harms and both isolated and unprepared for the next pandemic, drone strike or power outage. We need imagination and community to develop better tools and a better way of life.</p>
+            <p>Future Proof hosts a network of artists, scholars and technologists that tinker with ideas that will survive and scale. It provides the place, knowledge and infrastructure for members to retreat to for safety.</p>
+        </div>
+    </section>
+
+    <section>
+        <div class="container">
+            <h2>Why</h2>
+            <div class="grid">
+                <div class="card">
+                    <h3>01</h3>
+                    <p>Global risk is at an all time high</p>
+                </div>
+                <div class="card">
+                    <h3>02</h3>
+                    <p>We don't cohabit or collaborate sustainably with diverse human and non-human intelligences</p>
+                </div>
+                <div class="card">
+                    <h3>03</h3>
+                    <p>Most of us don't live meaningfully, connected or healthy</p>
+                </div>
+                <div class="card">
+                    <h3>04</h3>
+                    <p>Future Proof is unique: not paralysing pessimism, not aggressive progressivism</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="container">
+            <h2>In Short</h2>
+            <div class="grid">
+                <div class="card">
+                    <h3>Survive</h3>
+                    <p>Develop practices that help us survive this century</p>
+                </div>
+                <div class="card">
+                    <h3>Community</h3>
+                    <p>Building community with physical and psychological safety</p>
+                </div>
+                <div class="card">
+                    <h3>Places</h3>
+                    <p>Physical remote place (Norway) + urban place (Prague)</p>
+                </div>
+                <div class="card">
+                    <h3>Make</h3>
+                    <p>Write, draw, code and sweat to make ideas tangible</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="container">
+            <h2>Topics & Projects</h2>
+            <div class="topics-grid">
+                <span class="topic">Model evaluations</span>
+                <span class="topic">Adaptation practices</span>
+                <span class="topic">Living off the land</span>
+                <span class="topic">Art in times of war</span>
+                <span class="topic">Resilient information infrastructure</span>
+                <span class="topic">Survival skills</span>
+                <span class="topic">Off-grid systems</span>
+                <span class="topic">Community resilience</span>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="container">
+            <h2>What We Offer</h2>
+            <div class="value-grid">
+                <div class="value-item">
+                    <div class="icon">◯</div>
+                    <h3>Network</h3>
+                    <p>Invitation-based network of scholars, engineers and artists</p>
+                </div>
+                <div class="value-item">
+                    <div class="icon">◇</div>
+                    <h3>Funding</h3>
+                    <p>Access to funding for experiments, prototypes, art projects</p>
+                </div>
+                <div class="value-item">
+                    <div class="icon">△</div>
+                    <h3>Sellanraa</h3>
+                    <p>Remote retreat location in Norway for deep work and safety</p>
+                </div>
+                <div class="value-item">
+                    <div class="icon">□</div>
+                    <h3>Prague</h3>
+                    <p>Urban hub for events, collaboration and community</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>Membership-based events and magazine</p>
+            <p class="contact">By invitation only</p>
+        </div>
+    </footer>
+</body>
+</html>
