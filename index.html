@@ -18,15 +18,8 @@
             --card-bg: #111;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
 
         body {
             font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
@@ -36,13 +29,58 @@
             font-size: 18px;
         }
 
+        /* Password Protection Overlay */
+        #password-overlay {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: var(--bg);
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 1.5rem;
+        }
+
+        #password-overlay.hidden { display: none; }
+
+        #password-overlay h2 {
+            font-family: 'Space Mono', monospace;
+            font-size: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        #password-overlay input {
+            background: transparent;
+            border: 1px solid var(--border);
+            padding: 1rem 1.5rem;
+            font-family: 'Space Mono', monospace;
+            font-size: 1rem;
+            color: var(--fg);
+            width: 280px;
+            text-align: center;
+        }
+
+        #password-overlay input:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+
+        #password-overlay .error {
+            color: var(--accent);
+            font-size: 0.9rem;
+            height: 1.5em;
+        }
+
         .container {
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 2rem;
         }
 
-        /* Header / Hero - Full Screen with Overlay */
+        /* Header / Hero with Video */
         header {
             position: relative;
             width: 100%;
@@ -50,34 +88,24 @@
             overflow: hidden;
         }
 
-        .embed-bg {
+        .video-bg {
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
             z-index: 1;
-        }
-
-        .embed-bg iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
             object-fit: cover;
         }
 
         .hero-overlay {
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
             z-index: 2;
             display: flex;
             flex-direction: column;
             justify-content: flex-end;
             padding: 4rem;
-            background: linear-gradient(to top, rgba(10,10,10,0.95) 0%, rgba(10,10,10,0.6) 40%, rgba(10,10,10,0.2) 70%, transparent 100%);
+            background: linear-gradient(to top, rgba(10,10,10,0.95) 0%, rgba(10,10,10,0.5) 40%, rgba(10,10,10,0.1) 70%, transparent 100%);
         }
 
         h1 {
@@ -106,19 +134,9 @@
             letter-spacing: 0.1em;
         }
 
-        .tags span {
-            color: var(--accent);
-        }
-
-        .tags span::after {
-            content: ' |';
-            color: var(--border);
-            margin-left: 1rem;
-        }
-
-        .tags span:last-child::after {
-            content: '';
-        }
+        .tags span { color: var(--accent); }
+        .tags span::after { content: ' |'; color: var(--border); margin-left: 1rem; }
+        .tags span:last-child::after { content: ''; }
 
         /* Sections */
         section {
@@ -139,14 +157,31 @@
             font-size: clamp(1.1rem, 2vw, 1.4rem);
             max-width: 800px;
             line-height: 1.8;
-            color: var(--fg);
         }
 
-        .intro p + p {
-            margin-top: 1.5rem;
+        .intro p + p { margin-top: 1.5rem; }
+
+        /* Polycam Embed Section */
+        .polycam-section {
+            padding: 4rem 0;
         }
 
-        /* Grid sections */
+        .polycam-wrapper {
+            width: 100%;
+            max-width: 1000px;
+            margin: 0 auto;
+            aspect-ratio: 16/9;
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+        }
+
+        .polycam-wrapper iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        /* Grid & Cards */
         .grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -160,9 +195,7 @@
             transition: border-color 0.3s ease;
         }
 
-        .card:hover {
-            border-color: var(--accent);
-        }
+        .card:hover { border-color: var(--accent); }
 
         .card h3 {
             font-family: 'Space Mono', monospace;
@@ -173,10 +206,7 @@
             margin-bottom: 1rem;
         }
 
-        .card p {
-            color: var(--fg-muted);
-            font-size: 1rem;
-        }
+        .card p { color: var(--fg-muted); font-size: 1rem; }
 
         /* Topics */
         .topics-grid {
@@ -195,12 +225,9 @@
             transition: all 0.3s ease;
         }
 
-        .topic:hover {
-            border-color: var(--accent);
-            color: var(--fg);
-        }
+        .topic:hover { border-color: var(--accent); color: var(--fg); }
 
-        /* Value Props */
+        /* Value Grid */
         .value-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -214,22 +241,9 @@
             padding: 2rem;
         }
 
-        .value-item .icon {
-            font-size: 2rem;
-            margin-bottom: 1rem;
-        }
-
-        .value-item h3 {
-            font-family: 'Space Mono', monospace;
-            font-size: 1rem;
-            margin-bottom: 0.5rem;
-            text-transform: uppercase;
-        }
-
-        .value-item p {
-            color: var(--fg-muted);
-            font-size: 0.95rem;
-        }
+        .value-item .icon { font-size: 2rem; margin-bottom: 1rem; }
+        .value-item h3 { font-family: 'Space Mono', monospace; font-size: 1rem; margin-bottom: 0.5rem; text-transform: uppercase; }
+        .value-item p { color: var(--fg-muted); font-size: 0.95rem; }
 
         /* Footer */
         footer {
@@ -238,62 +252,42 @@
             text-align: center;
         }
 
-        footer p {
-            color: var(--fg-muted);
-            font-size: 0.9rem;
-        }
-
-        footer .contact {
-            font-family: 'Space Mono', monospace;
-            font-size: 1rem;
-            color: var(--accent);
-            margin-top: 1rem;
-        }
+        footer p { color: var(--fg-muted); font-size: 0.9rem; }
+        footer .contact { font-family: 'Space Mono', monospace; font-size: 1rem; color: var(--accent); margin-top: 1rem; }
 
         /* Responsive */
         @media (max-width: 768px) {
-            .container {
-                padding: 0 1.5rem;
-            }
-
-            .hero-overlay {
-                padding: 2rem;
-            }
-
-            section {
-                padding: 4rem 0;
-            }
-
-            .tags {
-                flex-direction: column;
-                gap: 0.5rem;
-            }
-
-            .tags span::after {
-                content: '';
-            }
+            .container { padding: 0 1.5rem; }
+            .hero-overlay { padding: 2rem; }
+            section { padding: 4rem 0; }
+            .tags { flex-direction: column; gap: 0.5rem; }
+            .tags span::after { content: ''; }
         }
 
-        /* Subtle animations */
+        /* Animations */
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        .hero-overlay > * {
-            animation: fadeIn 0.8s ease-out forwards;
-        }
-
+        .hero-overlay > * { animation: fadeIn 0.8s ease-out forwards; }
         .hero-overlay > *:nth-child(1) { animation-delay: 0.3s; opacity: 0; }
         .hero-overlay > *:nth-child(2) { animation-delay: 0.5s; opacity: 0; }
         .hero-overlay > *:nth-child(3) { animation-delay: 0.7s; opacity: 0; }
     </style>
 </head>
 <body>
+    <!-- Password Protection -->
+    <div id="password-overlay">
+        <h2>Future Proof</h2>
+        <input type="password" id="password-input" placeholder="Enter password" autofocus>
+        <p class="error" id="password-error"></p>
+    </div>
+
     <header>
-        <div class="embed-bg">
-            <iframe src="https://poly.cam/capture/f86e8831-d196-45c0-a96f-bd5df5802d31/embed" title="Polycam capture viewer" allow="fullscreen"></iframe>
-        </div>
+        <video class="video-bg" autoplay muted loop playsinline>
+            <source src="video.mp4" type="video/mp4">
+        </video>
         <div class="hero-overlay">
             <h1>Future Proof</h1>
             <p class="tagline">develop and test ideas that survive</p>
@@ -313,26 +307,23 @@
         </div>
     </section>
 
+    <section class="polycam-section">
+        <div class="container">
+            <h2>The Place</h2>
+            <div class="polycam-wrapper">
+                <iframe src="https://poly.cam/capture/f86e8831-d196-45c0-a96f-bd5df5802d31/embed" title="Polycam capture viewer" allow="fullscreen"></iframe>
+            </div>
+        </div>
+    </section>
+
     <section>
         <div class="container">
             <h2>Why</h2>
             <div class="grid">
-                <div class="card">
-                    <h3>01</h3>
-                    <p>Global risk is at an all time high</p>
-                </div>
-                <div class="card">
-                    <h3>02</h3>
-                    <p>We don't cohabit or collaborate sustainably with diverse human and non-human intelligences</p>
-                </div>
-                <div class="card">
-                    <h3>03</h3>
-                    <p>Most of us don't live meaningfully, connected or healthy</p>
-                </div>
-                <div class="card">
-                    <h3>04</h3>
-                    <p>Future Proof is unique: not paralysing pessimism, not aggressive progressivism</p>
-                </div>
+                <div class="card"><h3>01</h3><p>Global risk is at an all time high</p></div>
+                <div class="card"><h3>02</h3><p>We don't cohabit or collaborate sustainably with diverse human and non-human intelligences</p></div>
+                <div class="card"><h3>03</h3><p>Most of us don't live meaningfully, connected or healthy</p></div>
+                <div class="card"><h3>04</h3><p>Future Proof is unique: not paralysing pessimism, not aggressive progressivism</p></div>
             </div>
         </div>
     </section>
@@ -341,22 +332,10 @@
         <div class="container">
             <h2>In Short</h2>
             <div class="grid">
-                <div class="card">
-                    <h3>Survive</h3>
-                    <p>Develop practices that help us survive this century</p>
-                </div>
-                <div class="card">
-                    <h3>Community</h3>
-                    <p>Building community with physical and psychological safety</p>
-                </div>
-                <div class="card">
-                    <h3>Places</h3>
-                    <p>Physical remote place (Norway) + urban place (Prague)</p>
-                </div>
-                <div class="card">
-                    <h3>Make</h3>
-                    <p>Write, draw, code and sweat to make ideas tangible</p>
-                </div>
+                <div class="card"><h3>Survive</h3><p>Develop practices that help us survive this century</p></div>
+                <div class="card"><h3>Community</h3><p>Building community with physical and psychological safety</p></div>
+                <div class="card"><h3>Places</h3><p>Physical remote place (Norway) + urban place (Prague)</p></div>
+                <div class="card"><h3>Make</h3><p>Write, draw, code and sweat to make ideas tangible</p></div>
             </div>
         </div>
     </section>
@@ -381,26 +360,10 @@
         <div class="container">
             <h2>What We Offer</h2>
             <div class="value-grid">
-                <div class="value-item">
-                    <div class="icon">◯</div>
-                    <h3>Network</h3>
-                    <p>Invitation-based network of scholars, engineers and artists</p>
-                </div>
-                <div class="value-item">
-                    <div class="icon">◇</div>
-                    <h3>Funding</h3>
-                    <p>Access to funding for experiments, prototypes, art projects</p>
-                </div>
-                <div class="value-item">
-                    <div class="icon">△</div>
-                    <h3>Sellanraa</h3>
-                    <p>Remote retreat location in Norway for deep work and safety</p>
-                </div>
-                <div class="value-item">
-                    <div class="icon">□</div>
-                    <h3>Prague</h3>
-                    <p>Urban hub for events, collaboration and community</p>
-                </div>
+                <div class="value-item"><div class="icon">◯</div><h3>Network</h3><p>Invitation-based network of scholars, engineers and artists</p></div>
+                <div class="value-item"><div class="icon">◇</div><h3>Funding</h3><p>Access to funding for experiments, prototypes, art projects</p></div>
+                <div class="value-item"><div class="icon">△</div><h3>Sellanraa</h3><p>Remote retreat location in Norway for deep work and safety</p></div>
+                <div class="value-item"><div class="icon">□</div><h3>Prague</h3><p>Urban hub for events, collaboration and community</p></div>
             </div>
         </div>
     </section>
@@ -411,5 +374,29 @@
             <p class="contact">By invitation only</p>
         </div>
     </footer>
+
+    <script>
+        const PASSWORD = 'thegoodlife';
+        const overlay = document.getElementById('password-overlay');
+        const input = document.getElementById('password-input');
+        const error = document.getElementById('password-error');
+
+        // Check if already authenticated
+        if (sessionStorage.getItem('fp_auth') === 'true') {
+            overlay.classList.add('hidden');
+        }
+
+        input.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                if (input.value === PASSWORD) {
+                    sessionStorage.setItem('fp_auth', 'true');
+                    overlay.classList.add('hidden');
+                } else {
+                    error.textContent = 'Incorrect password';
+                    input.value = '';
+                }
+            }
+        });
+    </script>
 </body>
 </html>
